@@ -125,6 +125,8 @@ static CBOpenGLContext *decodingContext = nil;
 	//default values for 4-byte ARGB.
 	GLint   unpackalignment = 4;
 	
+	//most of these parameters should be made accessable.
+	
 	GLenum texture_hint;
 	enum {
 		TexHintNormal = 0,		//slow updating, normal datapath
