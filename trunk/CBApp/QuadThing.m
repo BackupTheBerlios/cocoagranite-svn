@@ -73,5 +73,5 @@
 }
 
 
-- (void)uploadQuadTex; { [texture uploadTexture];  }
+- (void)uploadQuadTex; { [texture uploadTexture]; }
 @end
