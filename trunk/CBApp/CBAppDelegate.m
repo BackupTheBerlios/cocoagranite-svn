@@ -152,14 +152,11 @@ check that the width is < MAXTEXWIDTH nor does it check for RectangleTexEXT.\n--
 		return NO;
 	}
 
-	[newquads performSelectorOnMainThread:@selector(addObject:)
+	[self performSelectorOnMainThread:@selector(addProgress:)
 							   withObject:[QuadThing quadThingWithView:view
 															   texture:tex
 															  vertices:vs]
 		
-						waitUntilDone:YES];
-	[self performSelectorOnMainThread:@selector(updateProgress:)
-						   withObject:nil
 						waitUntilDone:NO];
 	return YES;
 }
@@ -176,6 +173,11 @@ check that the width is < MAXTEXWIDTH nor does it check for RectangleTexEXT.\n--
 - (IBAction)endSettingsSheet:(id)sender {
     [NSApp endSheet: progressPanel];
     [progressPanel orderOut:self];
+}
+
+- (void)addProgress:(id)qt; {
+	[newquads addObject:qt];
+	[self updateProgress:self];
 }
 
 - (void)updateProgress:(id)didend; {

@@ -40,6 +40,8 @@
 - (vImage_Buffer*)vBuffer;
 - (CGContextRef)cgContext;
 
+- (long)rowBytes;
+
 @end
 
 @interface CBBitmap (Imaging_Utilities)

@@ -34,6 +34,8 @@
 
 - (IBAction)beginProgressSheet:(id)sender;
 - (IBAction)endSettingsSheet:(id)sender;
+
+- (void)addProgress:(id)qt;
 - (void)updateProgress:(id)didend;
 
 

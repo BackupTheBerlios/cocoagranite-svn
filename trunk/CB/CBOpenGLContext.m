@@ -87,6 +87,8 @@ FOUNDATION_STATIC_INLINE BOOL CBgluCheckExtension(NSString *str) {
 	CBTexture *tex = [[CBTexture alloc] initWithContext:self
 												 target:_textureTarget];
 	CBBitmap *buffer = [CBBitmap bitmapWithContentsOfFile:path];
+
+	
 	[tex setBuffer:buffer];
 	if (immediately) [tex uploadTexture];
 	

@@ -124,6 +124,7 @@ static BOOL initialized = NO;
 	NSRect imageRect = NSMakeRect(0,0,[copyRep pixelsWide],[copyRep pixelsHigh]);
 	
 	CBBitmap * buffer = [[CBBitmap allocWithZone:CBImageMallocZone] initWithSize:imageRect.size];
+	[buffer autorelease];
 	
 	[image setMatchesOnMultipleResolution:YES];		//ensure we get clean scaling
 	[image setCacheMode:NSImageCacheNever];			//don't think I need a cache
@@ -162,7 +163,7 @@ static BOOL initialized = NO;
 	
 	[pixelStore release];
 	
-	return [buffer autorelease];
+	return buffer;
 }
 
 + (id)bitmapWithContentsOfFile:(NSString*)path; {
@@ -197,7 +198,6 @@ static BOOL initialized = NO;
 		int err;
 		Handle dataRef = NULL;
 		GraphicsImportComponent importer = NULL;
-		CGImageRef cgimage = NULL;
 		
 		err = QTNewDataReferenceFromCFURL((CFURLRef)url, 0, &dataRef, NULL);
 		if(err || !dataRef) {
@@ -205,29 +205,64 @@ static BOOL initialized = NO;
 			if(dataRef) DisposeHandle(dataRef);
 			return nil;
 		}
-		err = GetGraphicsImporterForDataRef(dataRef, URLDataHandlerSubType, &importer);						 
+		err = GetGraphicsImporterForDataRef(dataRef, URLDataHandlerSubType, &importer);	
+		DisposeHandle(dataRef);
 		if(err || !importer) {
 			NSLog(@"CBBitmap +bitmapWithContentsOfFile: Error %d getting graphics importer.", err);
 			if(importer) CloseComponent(importer);
 			return nil;
 		}
+		
+		Rect gRect;
+		
+		GraphicsImportGetNaturalBounds( importer, &gRect );
+
+		CBBitmap * buffer = [[CBBitmap allocWithZone:CBImageMallocZone] initWithSize:NSMakeSize(gRect.right, gRect.bottom)];
+		[buffer autorelease];
+		
+		CGImageRef cgimage = NULL;
 		err = GraphicsImportCreateCGImage(importer, &cgimage, 0);											
 		if(err || !cgimage) {
 			NSLog(@"CBBitmap +bitmapWithContentsOfFile: Error %d creating CGImage.\n", err);
 			if(cgimage) CGImageRelease(cgimage);
 			return nil;
 		}
+		 
 		
-		CBBitmap * buffer = [[CBBitmap allocWithZone:CBImageMallocZone] initWithSize:NSMakeSize(CGImageGetWidth(cgimage), CGImageGetHeight(cgimage))];
-		[buffer autorelease];
+		
+		
 		if (cgimage && buffer) {
 			CGContextDrawImage ([buffer cgContext], CGRectMake (0,0,[buffer width],[buffer height]), cgimage);
 			CGImageRelease (cgimage);
 		} else return nil;
-		[buffer flipVertically];
+		 
+		/*
+		GWorldPtr gWorld;
+		
+		err =  QTNewGWorldFromPtr (&gWorld,							//GWorldPtr      *gw,
+								   k32ARGBPixelFormat,				//OSType         pixelFormat,
+								   &gRect,							//const Rect     *boundsRect,
+								   NULL,							//CTabHandle     cTable,
+								   NULL,							//GDHandle       aGDevice,
+								   0,								//GWorldFlags    flags,
+								   [buffer pixels],					//void           *baseAddr,
+								   [buffer rowBytes]);				//long           rowBytes );
+		if(err || !gWorld) {
+			NSLog(@"CBBitmap +bitmapWithContentsOfFile: Error %d creating wrapper GWorld.", err);
+			CloseComponent(importer);
+			if(gWorld) DisposeGWorld(gWorld);
+			return nil;
+		}
+		
+		GraphicsImportSetGWorld(importer, gWorld, NULL);
+		GraphicsImportDraw(importer);
+
+		DisposeGWorld(gWorld);
+		 */
 		
 		CloseComponent(importer);
-		DisposeHandle(dataRef);
+		
+		[buffer flipVertically];
 		
 		return buffer;
 	}
@@ -259,6 +294,7 @@ static BOOL initialized = NO;
 - (void*)pixels; { return (void*)(_buffer.data); }
 
 - (GLint)rowLength; { return ((GLint)_buffer.rowBytes)/4; }
+- (long)rowBytes; { return _buffer.rowBytes; }
 
 @end
 

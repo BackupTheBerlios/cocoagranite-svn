@@ -100,7 +100,7 @@ static int quadcount;
 		pointer = [context textureWithImage:[NSImage imageNamed:@"hand"]
 									 upload:YES]; 
 		[pointer retain];
-									 
+		NSAssert(hand, @"no pointy!");
 									 
 		_lastMouse = NSZeroPoint;
 	}
