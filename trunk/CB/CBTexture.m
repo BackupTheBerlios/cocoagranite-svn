@@ -3,7 +3,7 @@
 //  CocoaGranite
 //
 //  Created by Kelvin Nishikawa on Sat Jun 26 2004.
-//  Copyright (c) 2004 __Kelvin_NishikawaName__. All rights reserved.
+//  Copyright (c) 2004 Kelvin_Nishikawa. All rights reserved.
 //
 
 #import <CocoaGranite/CBTexture.h>
@@ -94,17 +94,17 @@ static CBOpenGLContext *decodingContext = nil;
 
 - (void)setBuffer:(id<CBTexture_Buffer>)pix; {
 	if (pix == buffer) return;
-	if (pix == nil) return;
 	if (buffer) [buffer release];
 	[_context ensureCurrentContext];
 	if (isTex) {
 		if ([self isEqual:[_context currentTexture]]) [_context unbindTexture];
+
 		glDeleteTextures( 1, &_textureName );
 		glGenTextures( 1, &_textureName );
 		isTex = NO;
 	}
 	buffer = pix;
-	[buffer retain];
+	if (pix != nil) [buffer retain];
 }
 
 - (id<CBTexture_Buffer>)buffer; { return buffer; }
