@@ -1,0 +1,19 @@
+{
+    IBClasses = (
+        {
+            CLASS = CBGLView; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {delegate = id; }; 
+            SUPERCLASS = NSOpenGLView; 
+        }, 
+        {CLASS = ChiselAppDelegate; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {
+            CLASS = ViewController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {view = CBGLView; }; 
+            SUPERCLASS = NSObject; 
+        }
+    ); 
+    IBVersion = 1; 
+}

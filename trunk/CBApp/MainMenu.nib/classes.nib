@@ -1,0 +1,19 @@
+{
+    IBClasses = (
+        {
+            ACTIONS = {beginProgressSheet = id; endSettingsSheet = id; open = id; }; 
+            CLASS = CBAppDelegate; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                log = NSTextView; 
+                progressBar = NSProgressIndicator; 
+                progressPanel = NSPanel; 
+                progressText = NSTextField; 
+                window = NSWindow; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }
+    ); 
+    IBVersion = 1; 
+}
