@@ -8,6 +8,7 @@
  */
 
 #import <CocoaGranite/OGLGeometry.h>
+#import <math.h>
 
 inline Vector2f MakeVector2f(GLfloat x, GLfloat y) { Vector2f v = {{x,y}}; return v;}
 inline Vector3f MakeVector3f(GLfloat x, GLfloat y, GLfloat z) { Vector3f v = {{x,y,z}}; return v;}
@@ -32,6 +33,11 @@ inline Vertex_TNV3		MakeVertex_TNV3		(Vector2f t,					Vector3f n,		Vector3f v){ 
 inline Vertex_TCNV3		MakeVertex_TCNV3	(Vector2f t,	Color4f c,		Vector3f n,		Vector3f v){ Vertex_TCNV3 e = {t,c,n,v}; return e;}
 inline Vertex_TCNV4		MakeVertex_TCNV4	(Vector4f t,	Color4f c,		Vector3f n,		Vector4f v){ Vertex_TCNV4 e = {t,c,n,v}; return e;}
 
+inline Vector4f AddVector4f(Vector4f v1, Vector4f v2) { return MakeVector4f(v1.x+v2.x,v1.y+v2.y,v1.z+v2.z,v1.w+v2.w); }
 
+Vector4f NormalizeVector4f(Vector4f v) {
+	float mag = sqrt(v.x*v.x + v.y*v.y + v.z*v.z + v.w*v.w);
+	return MakeVector4f(v.x/mag,v.y/mag,v.z/mag,v.w/mag);
+}
 
 

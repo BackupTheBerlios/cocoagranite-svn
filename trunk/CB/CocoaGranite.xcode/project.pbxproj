@@ -390,7 +390,7 @@
 		8DC2EF5A0486A6940098B216 = {
 			fileEncoding = 4;
 			isa = PBXFileReference;
-			lastKnownFileType = text.plist.xml;
+			lastKnownFileType = text.xml;
 			path = Info.plist;
 			refType = 4;
 			sourceTree = "<group>";
@@ -1034,7 +1034,7 @@
 		B672F97B07E9757800C9D586 = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
-			lastKnownFileType = text.plist.xml;
+			lastKnownFileType = text.xml;
 			name = "Chisel-Info.plist";
 			path = "../Chisel/Chisel-Info.plist";
 			refType = 2;
@@ -1043,7 +1043,7 @@
 		B672F98007E9758600C9D586 = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
-			lastKnownFileType = text.plist.xml;
+			lastKnownFileType = text.xml;
 			name = "CocoaGraniteApp-Info.plist";
 			path = "../CBApp/CocoaGraniteApp-Info.plist";
 			refType = 2;
@@ -1052,7 +1052,7 @@
 		B672F9B307E9766600C9D586 = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
-			lastKnownFileType = text.plist.xml;
+			lastKnownFileType = text.xml;
 			path = Info.plist;
 			refType = 4;
 			sourceTree = "<group>";

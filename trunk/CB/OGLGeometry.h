@@ -8,7 +8,6 @@
  */
 
 #import <CocoaGranite/VertexTypes.h>
-#import <Accelerate/Accelerate.h>
 
 inline Vector2f		MakeVector2f(GLfloat x, GLfloat y);
 inline Vector3f		MakeVector3f(GLfloat x, GLfloat y, GLfloat z);
@@ -33,5 +32,7 @@ inline Vertex_TNV3		MakeVertex_TNV3		(Vector2f t,					Vector3f n,		Vector3f v);
 inline Vertex_TCNV3		MakeVertex_TCNV3	(Vector2f t,	Color4f c,		Vector3f n,		Vector3f v);
 inline Vertex_TCNV4		MakeVertex_TCNV4	(Vector4f t,	Color4f c,		Vector3f n,		Vector4f v);
 
+inline Vector4f AddVector4f(Vector4f v1, Vector4f v2);
 
+Vector4f NormalizeVector4f(Vector4f v);
 
