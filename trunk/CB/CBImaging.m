@@ -30,9 +30,6 @@ static BOOL initialized = NO;
 }
 
 - (void)dealloc; {
-	if (cgContext != NULL) {
-		CGContextRelease(cgContext);
-	}
 	if (retainer) [retainer release];
 }
 
@@ -61,13 +58,6 @@ static BOOL initialized = NO;
 				self = nil;
 			} else {
 				retainer = ret;
-				cgContext = CGBitmapContextCreate (_buffer.data,
-												   (size_t) _buffer.width,
-												   (size_t) _buffer.height,
-												   8,									//size_t bitsPerComponent
-												   (size_t) _buffer.rowBytes,			//size_t bytesPerRow,
-												   CBImageColorSpace,						//CGColorSpaceRef colorspace,
-												   kCGImageAlphaPremultipliedFirst);   //CGImageAlphaInfo alphaInfo
 			}
 		}
 	}
@@ -99,15 +89,6 @@ static BOOL initialized = NO;
 			} else {
 				retainer = [anObj retain];
 			}
-			if (retainer != nil) {
-				cgContext = CGBitmapContextCreate (_buffer.data,
-												   (size_t) _buffer.width,
-												   (size_t) _buffer.height,
-												   8,									//size_t bitsPerComponent
-												   (size_t) _buffer.rowBytes,			//size_t bytesPerRow,
-												   CBImageColorSpace,						//CGColorSpaceRef colorspace,
-												   kCGImageAlphaPremultipliedFirst);   //CGImageAlphaInfo alphaInfo
-			}
 		}
 	}
 	return self;
@@ -117,6 +98,25 @@ static BOOL initialized = NO;
 	CBBitmap * buffer = [[CBBitmap allocWithZone:CBImageMallocZone] initWithSize:size];
 	return [buffer autorelease];
 }
+
+- (NSSize)size; { return NSMakeSize(_buffer.width, _buffer.height); }
+
+- (vImage_Buffer*)vBuffer; { return &_buffer; }
+
+- (GLenum)tex_internalFormat; { return GL_RGBA; }
+- (GLsizei)width; { return _buffer.width; }
+- (GLsizei)height; { return _buffer.height; }
+- (GLint)tex_border; { return 0; }
+- (GLenum)tex_format; { return GL_BGRA; }
+- (GLenum)tex_type; { return GL_UNSIGNED_INT_8_8_8_8_REV; }
+- (void*)pixels; { return (void*)(_buffer.data); }
+
+- (GLint)rowLength; { return ((GLint)_buffer.rowBytes)/4; }
+- (long)rowBytes; { return _buffer.rowBytes; }
+
+@end
+
+@implementation CBBitmap (ImageLoading_Additions)
 
 + (id)bitmapWithImage:(NSImage*)image; {
 	NSBitmapImageRep *pixelStore;
@@ -157,7 +157,6 @@ static BOOL initialized = NO;
 		cb_vImageConvertRGB888ToARGB8888(&vBsrc, vBdest, kvImageNoFlags);
 	} else {
 		cb_vImageConvert_RGBA8888ToARGB8888(&vBsrc, vBdest, kvImageNoFlags);
-		vImageUnpremultiplyData_ARGB8888( vBdest, vBdest, kvImageNoFlags );
 	}
 	vImageVerticalReflect_ARGB8888( vBdest, vBdest, kvImageNoFlags );
 	
@@ -168,33 +167,36 @@ static BOOL initialized = NO;
 
 + (id)bitmapWithContentsOfFile:(NSString*)path; {
 	NSString *type = [[path pathExtension] lowercaseString];
+	NSURL *url = [NSURL fileURLWithPath:path];
 	
 	if ([type isEqualToString:@"mov"]) {
 		//movie handler
 		return nil;
 	} else if ([type isEqualToString:@"jpg"] || [type isEqualToString:@"jpeg"] || [type isEqualToString:@"png"]) {
-		NSURL *url = [NSURL fileURLWithPath:path];
 		CGDataProviderRef data = CGDataProviderCreateWithURL ((CFURLRef)url);
-		if (!data) {
-			NSLog(@"CBBitmap +bitmapWithContentsOfFile: could not get data ref.");
-			return nil;
-		}
+		if (!data) return nil;
+
 		CGImageRef cgimage;
 		if ([type isEqualToString:@"png"]) cgimage = CGImageCreateWithPNGDataProvider(data, NULL, false, kCGRenderingIntentDefault);
 		else cgimage = CGImageCreateWithJPEGDataProvider (data,NULL,false,kCGRenderingIntentDefault);
+		CGDataProviderRelease(data);
 		
+		
+		if (!cgimage) return nil;
+
 		CBBitmap * buffer = [[CBBitmap allocWithZone:CBImageMallocZone] initWithSize:NSMakeSize(CGImageGetWidth(cgimage), CGImageGetHeight(cgimage))];
 		[buffer autorelease];
-		if (cgimage) {
-			CGContextDrawImage ([buffer cgContext], CGRectMake (0,0,[buffer width],[buffer height]), cgimage);
-			CGImageRelease (cgimage);
-		} else return nil;
+		if (buffer) {
+			CGContextRef cgContext = CGBitmapContextCreate ([buffer pixels], [buffer width], [buffer height], 8, [buffer rowBytes],
+															CBImageColorSpace, kCGImageAlphaPremultipliedFirst);
+			
+			if (cgContext) CGContextDrawImage (cgContext, CGRectMake (0,0,[buffer width],[buffer height]), cgimage);
+		}
+		CGImageRelease (cgimage);
+
 		[buffer flipVertically];
-		
-		CGDataProviderRelease(data);
 		return buffer;
 	} else {
-		NSURL *url = [NSURL fileURLWithPath:path];
 		int err;
 		Handle dataRef = NULL;
 		GraphicsImportComponent importer = NULL;
@@ -216,10 +218,7 @@ static BOOL initialized = NO;
 		Rect gRect;
 		
 		GraphicsImportGetNaturalBounds( importer, &gRect );
-
-		CBBitmap * buffer = [[CBBitmap allocWithZone:CBImageMallocZone] initWithSize:NSMakeSize(gRect.right, gRect.bottom)];
-		[buffer autorelease];
-		
+				
 		CGImageRef cgimage = NULL;
 		err = GraphicsImportCreateCGImage(importer, &cgimage, 0);											
 		if(err || !cgimage) {
@@ -227,38 +226,20 @@ static BOOL initialized = NO;
 			if(cgimage) CGImageRelease(cgimage);
 			return nil;
 		}
-		 
 		
+		if (!cgimage) return nil;
 		
+		CBBitmap * buffer = [[CBBitmap allocWithZone:CBImageMallocZone] initWithSize:NSMakeSize(gRect.right, gRect.bottom)];
+		[buffer autorelease];
 		
-		if (cgimage && buffer) {
-			CGContextDrawImage ([buffer cgContext], CGRectMake (0,0,[buffer width],[buffer height]), cgimage);
-			CGImageRelease (cgimage);
+		if (buffer) {
+			CGContextRef cgContext = CGBitmapContextCreate ([buffer pixels], [buffer width], [buffer height], 8, [buffer rowBytes],
+															CBImageColorSpace, kCGImageAlphaPremultipliedFirst);
+			
+			if (cgContext) CGContextDrawImage ( cgContext, CGRectMake (0,0,[buffer width],[buffer height]), cgimage);
 		} else return nil;
-		 
-		/*
-		GWorldPtr gWorld;
 		
-		err =  QTNewGWorldFromPtr (&gWorld,							//GWorldPtr      *gw,
-								   k32ARGBPixelFormat,				//OSType         pixelFormat,
-								   &gRect,							//const Rect     *boundsRect,
-								   NULL,							//CTabHandle     cTable,
-								   NULL,							//GDHandle       aGDevice,
-								   0,								//GWorldFlags    flags,
-								   [buffer pixels],					//void           *baseAddr,
-								   [buffer rowBytes]);				//long           rowBytes );
-		if(err || !gWorld) {
-			NSLog(@"CBBitmap +bitmapWithContentsOfFile: Error %d creating wrapper GWorld.", err);
-			CloseComponent(importer);
-			if(gWorld) DisposeGWorld(gWorld);
-			return nil;
-		}
-		
-		GraphicsImportSetGWorld(importer, gWorld, NULL);
-		GraphicsImportDraw(importer);
-
-		DisposeGWorld(gWorld);
-		 */
+		CGImageRelease (cgimage);
 		
 		CloseComponent(importer);
 		
@@ -280,21 +261,6 @@ static BOOL initialized = NO;
  }
  */
 
-- (NSSize)size; { return NSMakeSize(_buffer.width, _buffer.height); }
-
-- (vImage_Buffer*)vBuffer; { return &_buffer; }
-- (CGContextRef)cgContext; { return cgContext; }
-
-- (GLenum)tex_internalFormat; { return GL_RGBA; }
-- (GLsizei)width; { return _buffer.width; }
-- (GLsizei)height; { return _buffer.height; }
-- (GLint)tex_border; { return 0; }
-- (GLenum)tex_format; { return GL_BGRA; }
-- (GLenum)tex_type; { return GL_UNSIGNED_INT_8_8_8_8_REV; }
-- (void*)pixels; { return (void*)(_buffer.data); }
-
-- (GLint)rowLength; { return ((GLint)_buffer.rowBytes)/4; }
-- (long)rowBytes; { return _buffer.rowBytes; }
 
 @end
 
@@ -488,14 +454,46 @@ vImage_Error cb_vImageConvertRGB888ToARGB8888(const vImage_Buffer *src,
 }
 
 
+/*
+//some cgContext code
+ cgContext = CGBitmapContextCreate (_buffer.data,
+ (size_t) _buffer.width,
+ (size_t) _buffer.height,
+ 8,									//size_t bitsPerComponent
+ (size_t) _buffer.rowBytes,			//size_t bytesPerRow,
+ CBImageColorSpace,						//CGColorSpaceRef colorspace,
+ kCGImageAlphaPremultipliedFirst);   //CGImageAlphaInfo alphaInfo
+ */
+ 
+
+/*
+ //pure quicktime image import code
+
+  GWorldPtr gWorld;
+  
+  err =  QTNewGWorldFromPtr (&gWorld,							//GWorldPtr      *gw,
+							 k32ARGBPixelFormat,				//OSType         pixelFormat,
+							 &gRect,							//const Rect     *boundsRect,
+							 NULL,							//CTabHandle     cTable,
+							 NULL,							//GDHandle       aGDevice,
+							 0,								//GWorldFlags    flags,
+							 [buffer pixels],					//void           *baseAddr,
+							 [buffer rowBytes]);				//long           rowBytes );
+  if(err || !gWorld) {
+	  NSLog(@"CBBitmap +bitmapWithContentsOfFile: Error %d creating wrapper GWorld.", err);
+	  CloseComponent(importer);
+	  if(gWorld) DisposeGWorld(gWorld);
+	  return nil;
+  }
+  
+  GraphicsImportSetGWorld(importer, gWorld, NULL);
+  GraphicsImportDraw(importer);
+  
+  DisposeGWorld(gWorld);
+  */
 
 
-
-
-
-
-
-/*			
+/*
 CGImageAlphaInfo cgalpha = CGImageGetAlphaInfo (cgimage);
 
 switch(cgalpha) {

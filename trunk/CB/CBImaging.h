@@ -15,19 +15,11 @@
 @interface CBBitmap : NSObject <CBTexture_Buffer> {
 	vImage_Buffer		_buffer;
 	id					retainer;
-	CGContextRef		cgContext;
+
 }
 + (void)setZone:(NSZone*)zone;
 
 + (id)bitmapWithSize:(NSSize)size;
-+ (id)bitmapWithImage:(NSImage*)image;
-+ (id)bitmapWithContentsOfFile:(NSString*)path;
-
-/*
-+ (id)bitmapWithData:(NSData*)data;
-
-
-*/
 
 
 //pads rowBytes to 16 bytes
@@ -38,9 +30,22 @@
 
 - (NSSize)size;
 - (vImage_Buffer*)vBuffer;
-- (CGContextRef)cgContext;
 
 - (long)rowBytes;
+
+@end
+
+@interface CBBitmap (ImageLoading_Additions)
+
++ (id)bitmapWithImage:(NSImage*)image;
++ (id)bitmapWithContentsOfFile:(NSString*)path;
+
+
+/*
+ + (id)bitmapWithData:(NSData*)data;
+ 
+ 
+ */
 
 @end
 
