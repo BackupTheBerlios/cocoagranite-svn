@@ -3,7 +3,7 @@
  *  CocoaGranite
  *
  *  Created by Kelvin Nishikawa on Tue Jun 15 2004.
- *  Copyright (c) 2004 __MyCompanyName__. All rights reserved.
+ *  Copyright (c) 2004 __Kelvin_NishikawaName__. All rights reserved.
  *
  */
 

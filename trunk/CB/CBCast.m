@@ -3,7 +3,7 @@
 //  CocoaGranite
 //
 //  Created by Kelvin Nishikawa on 9/4/04.
-//  Copyright 2004 __MyCompanyName__. All rights reserved.
+//  Copyright 2004 __Kelvin_NishikawaName__. All rights reserved.
 //
 
 #import "CBCast.h"

@@ -3,7 +3,7 @@
 //  CocoaGranite
 //
 //  Created by Kelvin Nishikawa on Tue Mar 08 2005.
-//  Copyright (c) 2005 __MyCompanyName__. All rights reserved.
+//  Copyright (c) 2005 __Kelvin_NishikawaName__. All rights reserved.
 //
 
 #import <Cocoa/Cocoa.h>
