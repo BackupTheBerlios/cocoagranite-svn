@@ -33,6 +33,12 @@ static BOOL initialized = NO;
 	if (retainer) [retainer release];
 }
 
+
++ (id)bitmapWithSize:(NSSize)size; {
+	CBBitmap * buffer = [[CBBitmap allocWithZone:CBImageMallocZone] initWithSize:size];
+	return [buffer autorelease];
+}
+
 - (id)initWithSize:(NSSize)size; {
 	self = [super init];
 	if (self) {
@@ -94,14 +100,15 @@ static BOOL initialized = NO;
 	return self;
 }
 
-+ (id)bitmapWithSize:(NSSize)size; {
-	CBBitmap * buffer = [[CBBitmap allocWithZone:CBImageMallocZone] initWithSize:size];
-	return [buffer autorelease];
-}
 
 - (NSSize)size; { return NSMakeSize(_buffer.width, _buffer.height); }
 
 - (vImage_Buffer*)vBuffer; { return &_buffer; }
+
+- (long)rowBytes; { return _buffer.rowBytes; }
+
+#pragma mark
+#pragma mark CBTextureBuffer_Protocol implementation
 
 - (GLenum)tex_internalFormat; { return GL_RGBA; }
 - (GLsizei)width; { return _buffer.width; }
@@ -112,7 +119,6 @@ static BOOL initialized = NO;
 - (void*)pixels; { return (void*)(_buffer.data); }
 
 - (GLint)rowLength; { return ((GLint)_buffer.rowBytes)/4; }
-- (long)rowBytes; { return _buffer.rowBytes; }
 
 @end
 
