@@ -517,7 +517,7 @@
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
 				GCC_WARN_FOUR_CHARACTER_CONSTANTS = NO;
 				GCC_WARN_UNKNOWN_PRAGMAS = NO;
-				INFOPLIST_FILE = "../../CBApp/CocoaGraniteApp-Info.plist";
+				INFOPLIST_FILE = "../CBApp/CocoaGraniteApp-Info.plist";
 				INSTALL_PATH = "$(USER_APPS_DIR)";
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "-framework Foundation -framework AppKit";
@@ -792,7 +792,7 @@
 			);
 			isa = PBXGroup;
 			name = ThreadWorker;
-			path = /Users/kelvin/CocoaGranite/ThreadWorker;
+			path = /Users/kelvin/CG/trunk/ThreadWorker;
 			refType = 0;
 			sourceTree = "<absolute>";
 		};
@@ -829,45 +829,45 @@
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = CBAppDelegate.h;
-			path = /Users/kelvin/CocoaGranite/CBApp/CBAppDelegate.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../CBApp/CBAppDelegate.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		B672F92507E974C000C9D586 = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.objc;
 			name = CBAppDelegate.m;
-			path = /Users/kelvin/CocoaGranite/CBApp/CBAppDelegate.m;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../CBApp/CBAppDelegate.m;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		B672F92607E974C000C9D586 = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.objc;
 			name = main.m;
-			path = /Users/kelvin/CocoaGranite/CBApp/main.m;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../CBApp/main.m;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		B672F92707E974C000C9D586 = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = QuadThing.h;
-			path = /Users/kelvin/CocoaGranite/CBApp/QuadThing.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../CBApp/QuadThing.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		B672F92807E974C000C9D586 = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.objc;
 			name = QuadThing.m;
-			path = /Users/kelvin/CocoaGranite/CBApp/QuadThing.m;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../CBApp/QuadThing.m;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		B672F92907E974C000C9D586 = {
 			fileRef = B672F92407E974C000C9D586;
@@ -904,72 +904,72 @@
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = CGCDocument.h;
-			path = /Users/kelvin/CocoaGranite/Chisel/CGCDocument.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../Chisel/CGCDocument.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		B672F94B07E974F900C9D586 = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.objc;
 			name = CGCDocument.m;
-			path = /Users/kelvin/CocoaGranite/Chisel/CGCDocument.m;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../Chisel/CGCDocument.m;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		B672F94C07E974F900C9D586 = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = ChiselAppDelegate.h;
-			path = /Users/kelvin/CocoaGranite/Chisel/ChiselAppDelegate.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../Chisel/ChiselAppDelegate.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		B672F94D07E974F900C9D586 = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.objc;
 			name = ChiselAppDelegate.m;
-			path = /Users/kelvin/CocoaGranite/Chisel/ChiselAppDelegate.m;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../Chisel/ChiselAppDelegate.m;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		B672F94E07E974F900C9D586 = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.objc;
 			name = main.m;
-			path = /Users/kelvin/CocoaGranite/Chisel/main.m;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../Chisel/main.m;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		B672F94F07E974F900C9D586 = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = Polygons.h;
-			path = /Users/kelvin/CocoaGranite/Chisel/Polygons.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../Chisel/Polygons.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		B672F95007E974F900C9D586 = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = ViewController.h;
-			path = /Users/kelvin/CocoaGranite/Chisel/ViewController.h;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../Chisel/ViewController.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		B672F95107E974F900C9D586 = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.objc;
 			name = ViewController.m;
-			path = /Users/kelvin/CocoaGranite/Chisel/ViewController.m;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../Chisel/ViewController.m;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		B672F95207E974F900C9D586 = {
 			fileRef = B672F94A07E974F900C9D586;
@@ -1046,7 +1046,7 @@
 			isa = PBXFileReference;
 			lastKnownFileType = text.plist.xml;
 			name = "CocoaGraniteApp-Info.plist";
-			path = "/Users/kelvin/CocoaGranite/CBApp/CocoaGraniteApp-Info.plist";
+			path = "/Users/kelvin/CG/trunk/CBApp/CocoaGraniteApp-Info.plist";
 			refType = 0;
 			sourceTree = "<absolute>";
 		};
@@ -1080,9 +1080,9 @@
 			isa = PBXFileReference;
 			lastKnownFileType = wrapper.nib;
 			name = MainMenu.nib;
-			path = /Users/kelvin/CocoaGranite/CBApp/MainMenu.nib;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../CBApp/MainMenu.nib;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		B672FA2207E9776200C9D586 = {
 			fileRef = B672FA2107E9776200C9D586;
@@ -1094,17 +1094,17 @@
 			isa = PBXFileReference;
 			lastKnownFileType = image.tiff;
 			name = closedHand.tiff;
-			path = /Users/kelvin/CocoaGranite/CBApp/images/closedHand.tiff;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../CBApp/images/closedHand.tiff;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		B672FA4307E9777F00C9D586 = {
 			isa = PBXFileReference;
 			lastKnownFileType = image.tiff;
 			name = hand.tiff;
-			path = /Users/kelvin/CocoaGranite/CBApp/images/hand.tiff;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../CBApp/images/hand.tiff;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		B672FA4407E9777F00C9D586 = {
 			fileRef = B672FA4207E9777F00C9D586;
@@ -1530,7 +1530,7 @@
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
 				GCC_WARN_FOUR_CHARACTER_CONSTANTS = NO;
 				GCC_WARN_UNKNOWN_PRAGMAS = NO;
-				INFOPLIST_FILE = "Chisel-Info.plist";
+				INFOPLIST_FILE = "../Chisel/Chisel-Info.plist";
 				INSTALL_PATH = "$(USER_APPS_DIR)";
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "-framework Foundation -framework AppKit";

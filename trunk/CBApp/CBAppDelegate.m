@@ -6,7 +6,7 @@
 #import <CocoaGranite/OGLGeometry.h>
 
 #import "QuadThing.h"
-#import "ThreadWorker.h"
+#import "../ThreadWorker/ThreadWorker.h"
 
 @implementation CBAppDelegate
 
