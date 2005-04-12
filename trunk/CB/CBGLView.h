@@ -14,17 +14,28 @@ typedef enum {
 	CBHeightIsSizable = 1<<2
 } CBInternalSizingMask;
 
+typedef enum {
+	CBClearNone		= 0,
+	CBClearBefore	= 1,
+	CBClearAfter	= 2 //default
+} CBContextClearMode;
+
 @class CBScene;
 
 @interface CBGLView : NSOpenGLView {
+	CBOpenGLContext					*context;
+	
+	
 	IBOutlet id						delegate;
 	CBScene							*_scene;
 	
 	BOOL							mouseIsVisible;
-	NSColor							*backgroundColor;
 	
 	NSRect							_GLframe;
 	NSRect							_GLbounds;
+	
+	CBContextClearMode				_clearMode;
+	
 }
 
 
@@ -38,8 +49,9 @@ typedef enum {
 - (void)resetCursorRects;
 
 
-- (NSColor*)backgroundColor;
-- (void)setBackgroundColor:(NSColor*)aColor;
+- (CBContextClearMode)clearMode;
+- (void)setClearMode:(CBContextClearMode)mode;
+
 @end
 
 @interface CBGLView (Subclass_Overrides)
@@ -52,12 +64,12 @@ typedef enum {
 - (id)delegate;
 @end
 
-@interface CBGLView (CBGLView_CustomClassMethods)
-+ (NSColor*)defaultBackgroundColor;
-+ (void)setDefaultBackgroundColor:(NSColor*)aColor;
-
-@end
 
 @interface CBGLView (CBOpenGLContext_PassThrough)
 - (void)setVSyncEnabled:(BOOL)flag;
+
+- (NSColor*)backgroundColor;
+- (void)setBackgroundColor:(NSColor*)aColor;
+
+
 @end

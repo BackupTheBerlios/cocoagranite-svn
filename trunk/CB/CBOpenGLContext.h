@@ -10,7 +10,7 @@
 #import <OpenGL/gl.h>
 #import <CocoaGranite/CBTexture_BufferProtocol.h>
 
-//The context manages OpenGL states.9418430
+//The context manages OpenGL states.
 //The context manages textures
 
 
@@ -26,6 +26,10 @@
 	
 	CBTexture						*currentTexture;
 	CBVertexArray					*currentVertexArray;
+	
+	
+	NSColor							*clearColor;
+	GLbitfield						_clearBits;
 }
 
 - (NSZone*)textureZone;
@@ -49,4 +53,23 @@
 - (void)unbindVertexArray;
 
 @end
+
+@interface CBOpenGLContext (GLState_Additions)
+
+- (void)clear; 
+- (GLbitfield)clearBits;
+- (NSColor*)clearColor;
+
+- (void)setClearBits:(GLbitfield)mask;
+- (void)setClearColor:(NSColor*)aColor;
+
+@end
+
+
+@interface CBOpenGLContext (CBGLView_CustomClassMethods)
++ (NSColor*)defaultClearColor;
++ (void)setDefaultClearColor:(NSColor*)aColor;
+
+@end
+
 

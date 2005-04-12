@@ -36,7 +36,19 @@ FOUNDATION_STATIC_INLINE BOOL CBgluCheckExtension(NSString *str) {
 
 @end
 
+
+
 @implementation CBOpenGLContext
+
+static NSColor *defaultClearColor = nil;
+static BOOL initialized = NO;
+
++ (void)initialize; {
+	if (!initialized) {
+		
+		defaultClearColor = [[[NSColor blackColor] colorUsingColorSpaceName:NSDeviceRGBColorSpace] retain];
+	}
+}
 
 - (id)initWithFormat:(NSOpenGLPixelFormat *)format shareContext:(NSOpenGLContext *)share; {
 	self = [super initWithFormat:format shareContext:share];
@@ -48,6 +60,12 @@ FOUNDATION_STATIC_INLINE BOOL CBgluCheckExtension(NSString *str) {
 		currentVertexArray = nil;
 		
 		_textureTarget = GL_TEXTURE_2D;
+		
+		[self setClearColor:[[self class] defaultClearColor]];
+		
+		_clearBits = GL_COLOR_BUFFER_BIT;
+		glClear(_clearBits);
+		
 	}
 	return self;
 }
@@ -57,6 +75,7 @@ FOUNDATION_STATIC_INLINE BOOL CBgluCheckExtension(NSString *str) {
 	
 	if (currentTexture) [currentTexture release];
 	if (currentVertexArray) [currentVertexArray release];
+	if (clearColor) [clearColor release];
 	[super dealloc];
 }
 
@@ -144,3 +163,57 @@ FOUNDATION_STATIC_INLINE BOOL CBgluCheckExtension(NSString *str) {
 
 
 @end
+
+
+@implementation CBOpenGLContext (GLState_Additions)
+- (void)clear; { if (_clearBits) glClear(_clearBits); }
+
+- (GLbitfield)clearBits; { return _clearBits; }
+- (void)setClearBits:(GLbitfield)mask; {
+	_clearBits = mask;
+}
+
+- (NSColor*)clearColor; { return [[clearColor copy] autorelease]; }
+
+- (void)setClearColor:(NSColor*)aColor; {
+	if (!aColor) return;
+	if ([aColor isEqual:clearColor]) return;
+	aColor = [aColor colorUsingColorSpaceName:NSDeviceRGBColorSpace];
+	float aR,aG,aB,aA;
+	[aColor getRed:&aR
+			 green:&aG
+			  blue:&aB
+			 alpha:&aA];
+	float bR,bG,bB,bA;
+	[clearColor getRed:&bR
+					  green:&bG
+					   blue:&bB
+					  alpha:&bA];
+	if (aR != bR ||
+		aG != bG ||
+		aB != bB ||
+		aA != bA) {
+		if (clearColor != nil) [clearColor release];
+		clearColor =  [aColor retain];
+		
+		[self ensureCurrentContext];
+		glClearColor(aR,aG,aB,aA);
+	}
+}
+
+
+@end
+
+
+#pragma mark -
+
+
+@implementation CBOpenGLContext (CBGLView_CustomClassMethods)
++ (NSColor*)defaultClearColor; { return defaultClearColor; }
++ (void)setDefaultClearColor:(NSColor*)aColor; {
+	[defaultClearColor release];
+	defaultClearColor = [[aColor colorUsingColorSpaceName:NSDeviceRGBColorSpace] retain];
+}
+
+@end 
+

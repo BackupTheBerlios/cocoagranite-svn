@@ -20,7 +20,6 @@
 #pragma mark -
 
 @implementation CBGLView (NSObject_Overrides)
-static NSColor *defaultBackgroundColor = nil;
 static NSCursor *hiddenCursor = nil;
 static BOOL initialized = NO;
 + (void)initialize {
@@ -40,14 +39,12 @@ static BOOL initialized = NO;
         hiddenCursor = [[NSCursor alloc] initWithImage:cursor
                                                hotSpot:NSMakePoint(0,0)];
 		
-		defaultBackgroundColor = [[[NSColor blackColor] colorUsingColorSpaceName:NSDeviceRGBColorSpace] retain];
     }
 }
 
 - (void)dealloc; {
 	if (delegate) [delegate release];
 	if (_scene) [_scene release];
-	[backgroundColor release];
 	[super dealloc];
 }
 @end
@@ -58,8 +55,9 @@ static BOOL initialized = NO;
 - (id)initWithFrame:(NSRect)frameRect; { 
 	self = [self initWithFrame:frameRect pixelFormat:nil];
 	if (self) {
-		backgroundColor = [[[self class] defaultBackgroundColor] copy];
 		mouseIsVisible = YES;
+		
+		
 		
 		_scene = nil;
 		[self prepareView];
@@ -71,24 +69,13 @@ static BOOL initialized = NO;
 - (NSFocusRingType)focusRingType; { return NSFocusRingTypeNone; }
 
 - (void)drawRect:(NSRect)rect {
-	CBOpenGLContext *context = (CBOpenGLContext*)[self openGLContext];
 	[context ensureCurrentContext];
-	
-	
-	//interogate scenegraph for update
-	
-	//if updated rebuild instructionPipeline
-	//and coalesce instructions
-	
-	
-    // traverse instructionPipeline and dispatch messages to context.
+	if (_clearMode == CBClearBefore) [context clear];
 	
 	if (_scene) [_scene draw];
 	
 	[context flushBuffer];
-	
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	//make these bits a mutable property!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	if (_clearMode == CBClearAfter) [context clear];
 }
 
 @end
@@ -119,22 +106,22 @@ static BOOL initialized = NO;
     self = [super initWithFrame:frameRect pixelFormat:format];
     if (self) {
 		//create our windowed context
-		CBOpenGLContext *context = [[CBOpenGLContext alloc] initWithFormat:format shareContext:nil]; if (!context) { [self release]; return nil; }
+		context = [[CBOpenGLContext alloc] initWithFormat:format shareContext:nil]; if (!context) { [self release]; return nil; }
 		
 		[self setOpenGLContext:context]; [context release];
 		[self prepareOpenGLContext];
 		
 		_GLframe = frameRect;
 		_GLbounds = [self bounds];
+		
+		_clearMode = CBClearAfter;
     }
     return self;
 }
 
 //called after association to the view
 - (void)prepareOpenGLContext; {
-	CBOpenGLContext *context = (CBOpenGLContext*)[self openGLContext];
 	[context ensureCurrentContext];
-	//[[self openGLContext] ensureCurrentContext];
 	
 	
 	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_FASTEST);
@@ -163,9 +150,13 @@ static BOOL initialized = NO;
 
 //called after drawable is attached.
 - (void)prepareOpenGL; {
-	CBOpenGLContext *context = (CBOpenGLContext*)[self openGLContext];
 	[context ensureCurrentContext];
-	//[[self openGLContext] ensureCurrentContext];
+
+	/**********
+		A lot of this stuff could be moved to CBOpenGLContext...
+		but I kind of like it here.
+	
+	**********/
 	
 	
 	//glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_FASTEST);
@@ -202,7 +193,6 @@ static BOOL initialized = NO;
 
 
 - (void)reshape; {
-	NSOpenGLContext *context = [self openGLContext];
 	[context ensureCurrentContext];
 	[context update];
 	
@@ -212,6 +202,7 @@ static BOOL initialized = NO;
 	//_bounds = _GLbounds;
 	_GLframe = [self frame];
 	[self prepareView];
+	[context clear];
 }
 
 - (void)update; {
@@ -231,17 +222,7 @@ static BOOL initialized = NO;
 - (id)delegate; { return delegate; }
 
 @end
-#pragma mark -
 
-
-@implementation CBGLView (CBGLView_CustomClassMethods)
-+ (NSColor*)defaultBackgroundColor; { return defaultBackgroundColor; }
-+ (void)setDefaultBackgroundColor:(NSColor*)aColor; {
-	[defaultBackgroundColor release];
-	defaultBackgroundColor = [[aColor colorUsingColorSpaceName:NSDeviceRGBColorSpace] retain];
-}
-
-@end 
 #pragma mark -
 
 @implementation CBGLView
@@ -342,33 +323,14 @@ static BOOL initialized = NO;
 
 #pragma mark
 #pragma mark View Attributes
-- (NSColor*)backgroundColor; { return [[backgroundColor copy] autorelease]; }
 
-- (void)setBackgroundColor:(NSColor*)aColor; {
-	if (!aColor) return;
-	if ([aColor isEqual:backgroundColor]) return;
-	aColor = [aColor colorUsingColorSpaceName:NSDeviceRGBColorSpace];
-	float aR,aG,aB,aA;
-	[aColor getRed:&aR
-			 green:&aG
-			  blue:&aB
-			 alpha:&aA];
-	float bR,bG,bB,bA;
-	[backgroundColor getRed:&bR
-					  green:&bG
-					   blue:&bB
-					  alpha:&bA];
-	if (aR != bR ||
-		aG != bG ||
-		aB != bB ||
-		aA != bA) {
-		[backgroundColor release];
-		backgroundColor =  [aColor retain];
-		
-		[[self openGLContext] ensureCurrentContext];
-		glClearColor(aR,aG,aB,aA);
-		
-		[self setNeedsDisplay:YES];
+
+- (CBContextClearMode)clearMode; { return _clearMode; }
+- (void)setClearMode:(CBContextClearMode)mode; {
+	switch(mode) {
+		case CBClearBefore: _clearMode = CBClearBefore; break;
+		case CBClearAfter: _clearMode = CBClearAfter; break;
+		default: _clearMode = CBClearNone;
 	}
 }
 
@@ -377,5 +339,13 @@ static BOOL initialized = NO;
 
 @implementation CBGLView (CBOpenGLContext_PassThrough)
 - (void)setVSyncEnabled:(BOOL)flag; { [[self openGLContext] setVSyncEnabled:flag]; }
+
+- (NSColor*)backgroundColor; { return [context clearColor]; }
+
+- (void)setBackgroundColor:(NSColor*)aColor; {
+	[context setClearColor:aColor];
+	[self setNeedsDisplay:YES];
+}
+
 @end
 
