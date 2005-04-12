@@ -21,23 +21,23 @@
 	NSZone							*bufferZone;
 	CBVertex						*buffer;
 	unsigned int					count;
+	unsigned int					_size;
 	
 	CBLinkedList					*indices;
-	
-	CBVertex						**stack;
-	unsigned int					stacktop; //the last index+1
 }
 
 - (id)initWithCount:(unsigned int)vertexCount;
 - (CBVertexStore*)VertexStoreWithCount:(unsigned int)size;
 - (CBVertex*)buffer;
 - (unsigned int)count;
+- (unsigned int)size;
 @end
 
 @interface CBVertexArray : CBGeometryBuffer <NSCoding> {
 	@public
 	CBOpenGLContext					*_context;
 	GLuint							_vertexArrayName;
+	
 	
 	@protected
 }

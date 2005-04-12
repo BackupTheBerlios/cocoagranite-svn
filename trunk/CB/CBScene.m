@@ -37,7 +37,7 @@ static int quadcount;
 	
 		
 		
-		quadcount = 512;
+		quadcount = 262144;
 		
 		//This line allocates a VertexArray buffer, a VAO name, binds and sets up a stack of vertex pointers.
 		gbuffer = [context newVertexArrayWithCount:quadcount*4];

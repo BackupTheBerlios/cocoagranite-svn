@@ -58,19 +58,19 @@
 - (id)initWithCount:(unsigned int)vertexCount; {
 	self = [super init];
 	if (self) {
-		count = vertexCount;
-		bufferZone = NSCreateZone(NSRoundUpToMultipleOfPageSize(count*(sizeof(CBVertex) /*+2*sizeof(CBVertex*)+sizeof(CBIndex)*/  )),
+		_size = vertexCount;
+		bufferZone = NSCreateZone(NSRoundUpToMultipleOfPageSize(_size*(sizeof(CBVertex)) ),
 								  NSPageSize(),
 								  YES);
 		if (!bufferZone) { [self release]; return nil; }
 		
-		buffer = (CBVertex*)NSZoneMalloc(bufferZone, sizeof(CBVertex)*count );
+		buffer = (CBVertex*)NSZoneMalloc(bufferZone, sizeof(CBVertex)*_size );
 		if (!buffer) { [self release]; return nil; }
 		
 		indices = [CBLinkedList new];
 		CBVertex *ptr = buffer;
 		int i;
-		for (i=0;i < count;i++,ptr++) {
+		for (i=0;i < _size;i++,ptr++) {
 			CBVertexIndex *ind = [[CBVertexIndex alloc] initWithIndex:i vertex:ptr];
 			[indices pushBottom:ind];
 			[ind release];
@@ -81,7 +81,6 @@
 }
 
 - (void)dealloc; {
-	if (stack) free(stack);
 	if (buffer) NSZoneFree(bufferZone, (void *)buffer);
 	if (bufferZone) NSRecycleZone(bufferZone);
 	[super dealloc];
@@ -89,7 +88,8 @@
 
 
 - (CBVertex*)buffer; { return buffer; }
-- (unsigned int)count; { return count; }
+- (unsigned int)count; { return [indices count]; }
+- (unsigned int)size; { return _size; }
 
 - (CBVertexStore*)VertexStoreWithCount:(unsigned int)size; {
 	if  (size > [indices count]) return nil;

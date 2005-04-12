@@ -24,7 +24,7 @@
 
 //eventually I want to do something like this so I can coallesce drawElements for the same texture.
 //I'm going to have to match a lot of state information and set up a queue in the context.
-- (void)queueDrawing;
+//- (void)queueDrawing;
 
 @end
 
