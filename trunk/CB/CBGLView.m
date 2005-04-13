@@ -68,6 +68,14 @@ static BOOL initialized = NO;
 
 - (NSFocusRingType)focusRingType; { return NSFocusRingTypeNone; }
 
+
+
+
+#pragma mark
+#pragma mark Drawing
+
+
+
 - (void)drawRect:(NSRect)rect {
 	[context ensureCurrentContext];
 	if (_clearMode == CBClearBefore) [context clear];
@@ -300,11 +308,6 @@ static BOOL initialized = NO;
 
 
 #pragma mark
-#pragma mark Drawing
-
-
-
-#pragma mark
 #pragma mark Mouse Handling
 
 - (NSPoint)mouseLoc {
@@ -339,6 +342,12 @@ static BOOL initialized = NO;
 
 @implementation CBGLView (CBOpenGLContext_PassThrough)
 - (void)setVSyncEnabled:(BOOL)flag; { [[self openGLContext] setVSyncEnabled:flag]; }
+
+
+
+- (GLbitfield)clearBits; { return [context clearBits]; }
+- (void)setClearBits:(GLbitfield)mask; { [context setClearBits:mask]; }
+
 
 - (NSColor*)backgroundColor; { return [context clearColor]; }
 

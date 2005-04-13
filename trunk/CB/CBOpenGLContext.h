@@ -56,6 +56,8 @@
 
 @interface CBOpenGLContext (GLState_Additions)
 
+//I probably need to add clear Accum, Depth, Index, and Stencil.
+
 - (void)clear; 
 - (GLbitfield)clearBits;
 - (NSColor*)clearColor;

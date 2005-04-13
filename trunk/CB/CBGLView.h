@@ -15,9 +15,9 @@ typedef enum {
 } CBInternalSizingMask;
 
 typedef enum {
-	CBClearNone		= 0,
+	CBClearNone		= 0,//default
 	CBClearBefore	= 1,
-	CBClearAfter	= 2 //default
+	CBClearAfter	= 2 //initial
 } CBContextClearMode;
 
 @class CBScene;
@@ -67,6 +67,11 @@ typedef enum {
 
 @interface CBGLView (CBOpenGLContext_PassThrough)
 - (void)setVSyncEnabled:(BOOL)flag;
+
+	//I probably need to add clear Accum, Depth, Index, and Stencil.
+
+- (GLbitfield)clearBits;
+- (void)setClearBits:(GLbitfield)mask;
 
 - (NSColor*)backgroundColor;
 - (void)setBackgroundColor:(NSColor*)aColor;

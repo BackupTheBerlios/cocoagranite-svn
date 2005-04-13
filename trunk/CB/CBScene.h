@@ -21,38 +21,40 @@
 
 
 @interface CBScene : NSObject <NSCoding> {
+	CBGLView					*_view;
 	
 	CBVertexArray				*gbuffer;
-	CBVertexStore				*vbuffer;
-	CBVertexStore				*handbuffer;
-	
-	int							count;
 	
 	CBSprite					*contentSprite;
 	
 	CBCast						*cast;
 	
+	
+	
+	
+	
+	//these are not relevant to the final design and are for testing purposes only.
+	
+	NSPoint						_lastMouse;
+	
+	int							frame;
+	float						dist;
+	
+	int							count;
+	CBVertexStore				*vbuffer;
+	CBVertexStore				*handbuffer;
 	id							tex;
 	id							hand;
 	id							pointer;
 	id							planet;
 	id							planet2;
-	
-	NSPoint						_lastMouse;
-	int							frame;
-	float						dist;
-	
-	
-	
-	CBGLView					*_view;
-	
-	
-	CBSprite					*rootSprite;
 }
 
 - (id)initWithView:(CBGLView*)view;
 
 - (CBVertexArray*)gbuffer;
 
+//add this
+//-(void)prepareDraw;
 - (void)draw;
 @end
