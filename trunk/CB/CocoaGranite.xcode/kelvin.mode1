@@ -289,7 +289,7 @@
 								</array>
 							</array>
 							<key>PBXSmartGroupTreeModuleOutlineStateVisibleRectKey</key>
-							<string>{{0, 170}, {272, 692}}</string>
+							<string>{{0, 0}, {272, 692}}</string>
 						</dict>
 						<key>PBXTopSmartGroupGIDs</key>
 						<array/>
@@ -334,7 +334,7 @@
 										<key>PBXProjectModuleLabel</key>
 										<string>CBGeometryBuffer.h</string>
 										<key>bookmark</key>
-										<string>B6AA1237080B87EE00CFC5F7</string>
+										<string>B6AA12C9080CC34600CFC5F7</string>
 										<key>history</key>
 										<array>
 											<string>B6F55AF807F28C8000AD6809</string>
@@ -345,19 +345,22 @@
 											<string>B6AA102B080B599900CFC5F7</string>
 											<string>B6AA102C080B599900CFC5F7</string>
 											<string>B6AA102D080B599900CFC5F7</string>
-											<string>B6AA106A080B5C3C00CFC5F7</string>
-											<string>B6AA106C080B5C3C00CFC5F7</string>
 											<string>B6AA106D080B5C3C00CFC5F7</string>
-											<string>B6AA10A4080B614900CFC5F7</string>
-											<string>B6AA11D5080B6DD400CFC5F7</string>
-											<string>B6AA11D6080B6DD400CFC5F7</string>
-											<string>B6AA11EE080B6F0700CFC5F7</string>
-											<string>B6AA11EF080B6F0700CFC5F7</string>
-											<string>B6AA11F0080B6F0700CFC5F7</string>
 											<string>B6AA11F1080B6F0700CFC5F7</string>
 											<string>B6AA11F2080B6F0700CFC5F7</string>
 											<string>B6AA1234080B87EE00CFC5F7</string>
-											<string>B6AA1235080B87EE00CFC5F7</string>
+											<string>B6AA1274080CB93300CFC5F7</string>
+											<string>B6AA128B080CBE8D00CFC5F7</string>
+											<string>B6AA128C080CBE8D00CFC5F7</string>
+											<string>B6AA128D080CBE8D00CFC5F7</string>
+											<string>B6AA129D080CBF9100CFC5F7</string>
+											<string>B6AA129E080CBF9100CFC5F7</string>
+											<string>B6AA129F080CBF9100CFC5F7</string>
+											<string>B6AA12A0080CBF9100CFC5F7</string>
+											<string>B6AA12A1080CBF9100CFC5F7</string>
+											<string>B6AA12A2080CBF9100CFC5F7</string>
+											<string>B6AA12A3080CBF9100CFC5F7</string>
+											<string>B6AA12A4080CBF9100CFC5F7</string>
 										</array>
 										<key>prevStack</key>
 										<array>
@@ -523,6 +526,41 @@
 											<string>B6AA11F6080B6F0700CFC5F7</string>
 											<string>B6AA11F7080B6F0700CFC5F7</string>
 											<string>B6AA1236080B87EE00CFC5F7</string>
+											<string>B6AA1249080CB80800CFC5F7</string>
+											<string>B6AA124A080CB80800CFC5F7</string>
+											<string>B6AA124B080CB80800CFC5F7</string>
+											<string>B6AA124C080CB80800CFC5F7</string>
+											<string>B6AA124D080CB80800CFC5F7</string>
+											<string>B6AA1259080CB89D00CFC5F7</string>
+											<string>B6AA125A080CB89D00CFC5F7</string>
+											<string>B6AA125B080CB89D00CFC5F7</string>
+											<string>B6AA125C080CB89D00CFC5F7</string>
+											<string>B6AA125D080CB89D00CFC5F7</string>
+											<string>B6AA125E080CB89D00CFC5F7</string>
+											<string>B6AA125F080CB89D00CFC5F7</string>
+											<string>B6AA1260080CB89D00CFC5F7</string>
+											<string>B6AA1261080CB89D00CFC5F7</string>
+											<string>B6AA1277080CB93300CFC5F7</string>
+											<string>B6AA1278080CB93300CFC5F7</string>
+											<string>B6AA1281080CBE1C00CFC5F7</string>
+											<string>B6AA1282080CBE1C00CFC5F7</string>
+											<string>B6AA1283080CBE1C00CFC5F7</string>
+											<string>B6AA1284080CBE1C00CFC5F7</string>
+											<string>B6AA128E080CBE8D00CFC5F7</string>
+											<string>B6AA128F080CBE8D00CFC5F7</string>
+											<string>B6AA1290080CBE8D00CFC5F7</string>
+											<string>B6AA12A5080CBF9100CFC5F7</string>
+											<string>B6AA12A6080CBF9100CFC5F7</string>
+											<string>B6AA12A7080CBF9100CFC5F7</string>
+											<string>B6AA12A8080CBF9100CFC5F7</string>
+											<string>B6AA12A9080CBF9100CFC5F7</string>
+											<string>B6AA12AA080CBF9100CFC5F7</string>
+											<string>B6AA12AB080CBF9100CFC5F7</string>
+											<string>B6AA12AC080CBF9100CFC5F7</string>
+											<string>B6AA12AD080CBF9100CFC5F7</string>
+											<string>B6AA12AE080CBF9100CFC5F7</string>
+											<string>B6AA12AF080CBF9100CFC5F7</string>
+											<string>B6AA12B0080CBF9100CFC5F7</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -595,7 +633,7 @@
 	<key>StatusbarIsVisible</key>
 	<true/>
 	<key>TimeStamp</key>
-	<real>134973422.58688131</real>
+	<real>135054150.81189325</real>
 	<key>ToolbarDisplayMode</key>
 	<integer>2</integer>
 	<key>ToolbarIsVisible</key>
@@ -648,7 +686,7 @@
 										<key>PBXProjectModuleLabel</key>
 										<string>CBGLView.m</string>
 										<key>bookmark</key>
-										<string>B6AA1238080B87EE00CFC5F7</string>
+										<string>B6AA12CA080CC34600CFC5F7</string>
 										<key>history</key>
 										<array>
 											<string>B6AA1082080B5C3C00CFC5F7</string>
@@ -732,7 +770,7 @@
 			<key>WindowToolGUID</key>
 			<string>B6AA101E080B54AC00CFC5F7</string>
 			<key>WindowToolIsVisible</key>
-			<true/>
+			<false/>
 		</dict>
 		<dict>
 			<key>FirstTimeWindowDisplayed</key>
@@ -867,7 +905,7 @@
 												<key>PBXProjectModuleLabel</key>
 												<string>CBLinkedList.m</string>
 												<key>bookmark</key>
-												<string>B6AA1239080B87EE00CFC5F7</string>
+												<string>B6AA12CB080CC34600CFC5F7</string>
 												<key>history</key>
 												<array>
 													<string>B6AA104E080B599900CFC5F7</string>
