@@ -135,7 +135,7 @@ static BOOL initialized = NO;
 - (void)unbindTexture; {
 	if ( currentTexture ) {
 		[self ensureCurrentContext];
-		glBindTexture(currentTexture->_target, NULL);
+		glBindTexture(currentTexture->_target, 0);
 		currentTexture = nil;
 	}
 }
@@ -157,7 +157,7 @@ static BOOL initialized = NO;
 }
 - (void)unbindVertexArray; {
 	[self ensureCurrentContext];
-	glBindVertexArrayAPPLE( NULL );
+	glBindVertexArrayAPPLE( 0 );
 	currentVertexArray = nil;
 }
 

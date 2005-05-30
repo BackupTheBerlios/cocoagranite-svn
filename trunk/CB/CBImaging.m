@@ -206,7 +206,7 @@ static BOOL initialized = NO;
 	} else {
 		int err;
 		Handle dataRef = NULL;
-		OSType refType = NULL;
+		OSType refType = 0;
 		GraphicsImportComponent importer = NULL;
 		
 		err = QTNewDataReferenceFromCFURL((CFURLRef)url, 0, &dataRef, &refType);

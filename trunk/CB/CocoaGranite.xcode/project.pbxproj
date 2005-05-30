@@ -316,6 +316,7 @@
 				B67DEA2E06E9EBA90097C1ED,
 				B6DB92CB07DE9A37002B25EF,
 				B6A4E87C07E574B100F574DE,
+				B62F1A9E083070EB00ED8240,
 			);
 			isa = PBXHeadersBuildPhase;
 			runOnlyForDeploymentPostprocessing = 0;
@@ -357,6 +358,7 @@
 				B67DEA2F06E9EBA90097C1ED,
 				B664BCF20750A5A300F76612,
 				B6DB92CC07DE9A37002B25EF,
+				B62F1A9F083070EB00ED8240,
 			);
 			isa = PBXSourcesBuildPhase;
 			runOnlyForDeploymentPostprocessing = 0;
@@ -508,6 +510,7 @@
 				B62D312B068D8F0300FA6FF5,
 			);
 			buildRules = (
+				B67F487C084B738B00DBC824,
 			);
 			buildSettings = {
 				GCC_MODEL_CPU = G4;
@@ -757,6 +760,34 @@
 		};
 		B62D3201068D978200FA6FF5 = {
 			fileRef = B62D31FF068D978200FA6FF5;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		B62F1A9C083070EB00ED8240 = {
+			fileEncoding = 4;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			path = CBAnimation.h;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		B62F1A9D083070EB00ED8240 = {
+			fileEncoding = 4;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.objc;
+			path = CBAnimation.m;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		B62F1A9E083070EB00ED8240 = {
+			fileRef = B62F1A9C083070EB00ED8240;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		B62F1A9F083070EB00ED8240 = {
+			fileRef = B62F1A9D083070EB00ED8240;
 			isa = PBXBuildFile;
 			settings = {
 			};
@@ -1154,6 +1185,8 @@
 				B67DEA2B06E9EB710097C1ED,
 				B62D31FE068D978200FA6FF5,
 				B62D31FF068D978200FA6FF5,
+				B62F1A9C083070EB00ED8240,
+				B62F1A9D083070EB00ED8240,
 			);
 			isa = PBXGroup;
 			name = Assets;
@@ -1191,6 +1224,14 @@
 			name = GL;
 			refType = 4;
 			sourceTree = "<group>";
+		};
+		B67F487C084B738B00DBC824 = {
+			compilerSpec = com.apple.compilers.gcc;
+			fileType = sourcecode.c;
+			isEditable = 1;
+			isa = PBXBuildRule;
+			outputFiles = (
+			);
 		};
 		B6A4E87B07E574B100F574DE = {
 			fileEncoding = 4;
