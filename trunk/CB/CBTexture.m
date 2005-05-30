@@ -132,7 +132,7 @@ static CBOpenGLContext *decodingContext = nil;
 		TexHintNormal = 0,		//slow updating, normal datapath
 		TexHintVRAM = 1,		//rare updating, leave in VRAM
 		TexHintAGP = 2			//fast updating through AGP
-	} texhintsetting = TexHintAGP; 
+	} texhintsetting = TexHintVRAM;//TexHintAGP; 
 	switch (texhintsetting) {
 		case TexHintVRAM:   texture_hint = GL_STORAGE_CACHED_APPLE; break;
 		case TexHintAGP:	texture_hint = GL_STORAGE_SHARED_APPLE; break;
