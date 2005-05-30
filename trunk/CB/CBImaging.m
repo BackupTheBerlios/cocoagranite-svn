@@ -31,6 +31,7 @@ static BOOL initialized = NO;
 
 - (void)dealloc; {
 	if (retainer) [retainer release];
+	[super dealloc];
 }
 
 
@@ -205,16 +206,19 @@ static BOOL initialized = NO;
 	} else {
 		int err;
 		Handle dataRef = NULL;
+		OSType refType = NULL;
 		GraphicsImportComponent importer = NULL;
 		
-		err = QTNewDataReferenceFromCFURL((CFURLRef)url, 0, &dataRef, NULL);
+		err = QTNewDataReferenceFromCFURL((CFURLRef)url, 0, &dataRef, &refType);
+
 		if(err || !dataRef) {
 			NSLog(@"CBBitmap +bitmapWithContentsOfFile: QTNewDataReferenceFromCFURL() returned %d.", err);
 			if(dataRef) DisposeHandle(dataRef);
 			return nil;
 		}
-		err = GetGraphicsImporterForDataRef(dataRef, URLDataHandlerSubType, &importer);	
+		err = GetGraphicsImporterForDataRef(dataRef, refType, &importer);	
 		DisposeHandle(dataRef);
+		
 		if(err || !importer) {
 			NSLog(@"CBBitmap +bitmapWithContentsOfFile: Error %d getting graphics importer.", err);
 			if(importer) CloseComponent(importer);
